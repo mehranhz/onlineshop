@@ -1,0 +1,112 @@
+{% extends 'adminlte/base.html' %}
+{% load static %}
+{% block content %}
+    <script src="{% static '/admin-lte/plugins/jquery/jquery.js' %}"></script>
+    <div class="card product_detail" dir="rtl">
+        <div class="btn btn-group btn-group-sm " dir="ltr" style="margin-bottom: 50px">
+            <a class="btn btn-outline-success" href="/admin/panel/products/addinstance/{{ product.id }}">
+                افزودن موجودی
+            </a>
+            <a href="/admin/panel/products/edit/{{ product.id }}" class="btn btn-outline-danger">ویرایش </a>
+            <a href="{% url 'adminPanel:add_product' %}" class="btn btn-outline-primary">
+                افزودن محصول جدید
+            </a>
+        </div>
+
+        <h2>
+            {{ product.name }}
+        </h2>
+
+        {% if form %}
+            <div style="display: flex;flex-direction:column;align-items: end">
+                <label for="key">نام:</label>
+                <input type="text" id="key">
+                <label for="value">مقدار:</label>
+                <input type="text" id="value">
+                <button id="add" class="btn btn-sm btn-outline-success">
+                    افزودن
+                </button>
+            </div>
+            <form class="add-product" method="post" style="width: 100%">
+                {% csrf_token %}
+
+                {{ form }}
+                <input type="text " hidden id="id_product">
+
+                <div class="card-footer" style="width: 100%">
+                    <button type="submit" class="btn btn-primary">ذخیره</button>
+                </div>
+            </form>
+        {% endif %}
+
+
+
+        <div class="product-image-thumbnail">
+            <h3>تصویر اصلی</h3>
+            <img src="{{ product.thumbnail }}" alt="">
+        </div>
+        <div  style="width: 100% ;text-align: right">
+        <pre>
+            {{ product.description }}
+        </pre>
+            <table class="product_features_table" style="width: 100%;text-align: start" dir="rtl">
+                <tbody dir="rtl">
+                {% for feature in main_features %}
+                    <tr dir="rtl" class="product_features_table">
+                        <th class="product_detail_table_cell" style="width: 40%">{{ feature.key }}</th>
+                        <td class="product_detail_table_cell" style="width:60%">{{ feature.value }}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+
+
+        </div>
+        <p>
+            {% if instance %}
+                با {{ instance.features }}
+            {% endif %}
+        </p>
+        <p style="border-bottom: 2px solid grey;width: 100%;text-align: right;padding: 20px;font-family: IRANSans;font-size: 18px">
+            موجودی
+        </p>
+
+        <div class="row" style="width: 95%;margin: 20px">
+
+            {% for instance in instances %}
+                <div class="col-lg-3"
+                     style="margin: 15px;direction: rtl;border: 1px solid lightgrey;padding: 25px;border-radius: 10px;box-shadow: 1px 0px 4px 1px #7a8793;display: flex;flex-direction: column;align-items: start">
+                    <p dir="ltr"> {{ instance.features }}</p>
+
+                    <p>تعداد : {{ instance.count }}</p>
+                    <a style="width: 100%;padding: 5px" class="btn btn-sm btn-outline-info"
+                       href="/admin/panel/products/updateinstance/{{ product.id }}/{{ instance.id }}">ویرایش</a>
+                    <a style="width: 100%;padding: 5px" class="btn btn-sm btn-outline-info"
+                       href="/admin/panel/products/{{ product.id }}/{{ instance.id }}/deleteinstance">حذف</a>
+                </div>
+            {% endfor %}
+
+            <div class="product_detail">
+                <h2>
+                    تصاویر
+                </h2>
+                <div class="row">
+                    {% for image in images.images %}
+                        <div class="col-md-3">
+                            <img class="product-image-view" src="{{ image.path }}" alt="">
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <script type="text/javascript" src="{% static 'js/add_feature.js' %}"></script>
+{% endblock %}
+
+
+
+
+
+
+{'features': ['{"key":"جنس","value":"پلی استر - پنبه"}', '{"key":"الیاف","value":"نخ"}', '{"key":"رنگ","value":"آبی ، قرمز ،زرد"}', '{"key":"سایز","value":"M"}']}

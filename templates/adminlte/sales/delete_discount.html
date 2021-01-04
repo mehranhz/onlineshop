@@ -1,0 +1,10 @@
+{% extends 'adminlte/base.html' %}
+{% block content %}
+    <form method="POST">
+        <h2 style="font-family: IRANSans">delete {{ discount.code  }} ?</h2>
+        {% csrf_token %}
+        <input type="submit" class="btn btn-outline-danger" value="تایید">
+        <a href="{% url 'adminPanel:admin_discounts' %}" class="btn btn-outline-dark ">انصراف</a>
+
+    </form>
+{% endblock %}

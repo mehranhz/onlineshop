@@ -1,0 +1,105 @@
+{% extends 'adminlte/base.html' %}
+{% block content %}
+    <div class="pane-wrapper">
+        <div class="controls">
+            <a href="{% url 'adminPanel:add_product' %}" class="btn btn-outline-success">
+                افزودن محصول جدید
+            </a>
+        </div>
+        <div class="content-detail-table">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">جدول محصولات</h3>
+
+                        <div class="card-tools">
+                            <div class="input-group input-group-sm" style="width: 150px;">
+                                <input type="text" name="table_search" class="form-control float-right"
+                                       placeholder="Search">
+
+                                <div class="input-group-append">
+                                    <button type="submit" class="btn btn-default">
+                                        <i class="fas fa-search"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /.card-header -->
+                    <div class="card-body table-responsive p-0" style="height: 300px;">
+                        <table class="table table-head-fixed text-nowrap">
+                            <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>عنوان</th>
+                                <th>User</th>
+                                <th>Date</th>
+                                <th>Status</th>
+                                <th>تعداد</th>
+                                <th>تصویر</th>
+                                <th>Reason</th>
+                                <th>controls</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+
+                            {% for product in product_list %}
+
+                                <tr>
+
+                                    <td><a href="/admin/panel/products/{{ product.id }}">{{ product.id }}</a></td>
+                                    <td><a href="/admin/panel/products/{{ product.id }}">{{ product.name }}</a></td>
+                                    <td>{{ product.user }}</td>
+                                    <td>11-7-2014</td>
+                                    <td><span class="tag tag-danger">Denied</span></td>
+                                    <td>{{ product.total_count }}</td>
+                                    <td><img class="product-image-preview" src="{{ product.thumbnail }}" alt="image unavailable"></td>
+                                    <td>{{ product.description }}</td>
+                                    <td>
+                                        <div class="btn-group" dir="ltr">
+                                             <a href="/admin/panel/products/delete/{{ product.id }}"
+                                               class="btn btn-sm btn-outline-danger">delete</a>
+                                            <a href="/admin/panel/products/edit/{{ product.id }}"
+                                               class="btn btn-sm btn-outline-dark">edit</a>
+                                        </div>
+                                    </td>
+
+                                </tr>
+
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-- /.card-body -->
+                    <div class="card-footer clearfix">
+                        <div class="pagination" dir="ltr">
+                            <span class="step-links">
+                                {% if page_obj.has_previous %}
+                                    <a style="margin: 10px" href="?page=1">&laquo; first</a>
+                                    <a style="margin: 10px"
+                                       href="?page={{ page_obj.previous_page_number }}">previous</a>
+                                {% endif %}
+
+
+
+                                {% if page_obj.has_next %}
+
+                                    <a style="margin: 10px" href="?page={{ page_obj.next_page_number }}">next</a>
+                                    <a style="margin: 10px"
+                                       href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+                                {% endif %}
+
+                                <span class="current" style="margin-left: 50px">
+                                    Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+                                </span>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <!-- /.card -->
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+

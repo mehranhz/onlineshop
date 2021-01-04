@@ -1,0 +1,27 @@
+{% extends 'adminlte/base.html' %}
+{% block content %}
+    {% load static %}
+    <script src="{% static '/admin-lte/plugins/jquery/jquery.js' %}"></script>
+    <div class="panel-content">
+
+        <div class="card card-primary form-wrapper ">
+            <div class="card-header">
+                <h3 class="card-title">
+
+                    {% if not form.instance.pk %}
+                        افزودن سفارش
+                    {% else %}
+                        ویرایش
+                    {% endif %}
+
+                </h3>
+            </div>
+            <!-- /.card-header -->
+            <!-- form start -->
+            <form action="" class="add-product">
+                {{ form }}
+            </form>
+        </div>
+    </div>
+
+{% endblock %}

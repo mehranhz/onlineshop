@@ -32,6 +32,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    # 'adminlte3_theme',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -39,7 +40,17 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'app',
-    'user'
+    'user',
+    'adminPanel',
+    'authentication',
+    'category',
+    'filter',
+    'order',
+    'payment',
+    'products',
+    'sale',
+    'shipment',
+    'adminlte3',
 ]
 
 MIDDLEWARE = [
@@ -77,8 +88,12 @@ WSGI_APPLICATION = 'onlineshop.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'ecommerce',
+        'USER': 'postgres',
+        'PASSWORD': 'meho1376',
+        'HOST': 'localhost',
+        'PORT': ''
     }
 }
 
@@ -117,6 +132,20 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
 STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, "assets")
+
 STATICFILES_DIRS = [
     STATIC_DIR
+]
+
+AUTH_USER_MODEL = 'user.USER'
+ADMIN_LOGIN_REDIRECT_URL = '/admin/panel'
+# LOGIN_URL = '/admin/login'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
+MEDIA_URL = '/media/'
+ALLOWED_FILE_FORMATS = [
+    '.jpg',
+    '.JPG',
+    'PNG',
+    '.png'
 ]

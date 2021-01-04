@@ -1,0 +1,111 @@
+{% extends 'adminlte/base.html' %}
+{% block content %}
+    {% load static %}
+    <script src="{% static '/admin-lte/plugins/jquery/jquery.js' %}"></script>
+    <div class="panel-content">
+
+        <div class="card card-primary form-wrapper ">
+            <div class="card-header">
+                <h3 class="card-title">
+
+                    {% if not form.instance.pk %}
+                        افزودن محصول جدید
+                    {% else %}
+                        ویرایش
+                    {% endif %}
+
+                </h3>
+            </div>
+            <!-- /.card-header -->
+            <!-- form start -->
+
+            <div class="modal" id="fileupload" role="dialog" tabindex="-1">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">افزودن عکس به محصول</h5>
+
+                            <button class="close" type="button" style="color: red" data-dismiss="modal">
+                                x
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <form class="add-product" enctype="multipart/form-data" id="upload"
+                                  action="/admin/panel/upload" method="POST">
+                                {% csrf_token %}
+                                <label for="file_name">عنوان</label>
+                                <input type="text" id="file_name">
+                                <label for="directory">پوشه</label>
+                                <input type="text" id="directory">
+                                <label for="alternative_text">متن جایگزین</label>
+                                <input type="text" id="alternative_text">
+                                <input type="file" id="file_source" name="file_source" style="margin-top: 10px">
+                                <div class="modal-footer">
+                                    <label for="is_thumbnail">تصویر اصلی</label>
+                                    <input type="checkbox" id="is_thumbnail">
+                                    <div class="btn-group" dir="ltr">
+                                        <button type="button" class="btn btn-outline-danger" data-dismiss="modal">بستن
+                                        </button>
+                                        <button type="submit" class="btn btn-outline-success">بارگذاری</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-lg-3 ">
+                    <div class="card card-success">
+                        <div class="card-header">
+                            <h3 class="card-title">افزودن ویژگی به محصول</h3>
+                            <div class="card-tools">
+                                <button type="button" class="btn btn-tool" data-card-widget="collapse"><i
+                                        class="fas fa-minus"></i>
+                                </button>
+                            </div>
+                            <!-- /.card-tools -->
+                        </div>
+                        <!-- /.card-header -->
+                        <div class="card-body" style="display: flex;flex-direction:column;align-items: end;direction: rtl">
+                                <label for="key">کلید</label>
+                                <input id="key" type="text" style="width: 100%">
+                                <label for="value">مقدار</label>
+                                <input id="value" type="text" style="width: 100%">
+                                <button id="add" class="btn btn-outline-success" style="width: 100%;margin-top: 10px">
+                                    افزودن
+                                </button>
+                        </div>
+                        <!-- /.card-body -->
+                    </div>
+                </div>
+                <div class="col-lg-9">
+                    <form method="post" class="add-product">
+                        {% if form.initial %}
+                            <h1 id="update-heading">update</h1>
+                        {% endif %}
+                        {% csrf_token %}
+                        {{ form }}
+                        <button style="margin: 25px" type="button" class="btn btn-outline-info" data-toggle="modal"
+                                data-target="#fileupload">
+                            افزودن تصویر
+                        </button>
+                        <div id="images" style="display: flex">
+
+                        </div>
+                        <div class="card-footer" style="width: 100%">
+                            <input type="submit" class="btn btn-primary" value="ذخیره"/>
+
+                        </div>
+                    </form>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+    <script type="text/javascript" src="{% static 'js/add_feature.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/product_image_upload.js' %}"></script>
+{% endblock %}
