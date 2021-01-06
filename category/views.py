@@ -18,37 +18,14 @@ class Categories(ListView):
     template_name = 'adminlte/categories/categories.html'
 
 
-def get_categories():
-    choices = ((None, 'دسنه بندی پدر را انتخاب کنید'),)
-    categories = Category.objects.all()
-    for category in categories:
-        choices += ((category.id, category.title),)
-    return choices
-
-
-class CategoryForm(forms.ModelForm):
-    parent = forms.ChoiceField(choices=get_categories())
-
-    class Meta:
-        model = Category
-        fields = ['title', 'type', 'parent']
-
-    # replace Category object with category id provided by template(user choice)
-    def clean(self):
-        for field, value in self.cleaned_data.items():
-            if field == 'parent':
-                self.cleaned_data['parent'] = Category.objects.get(id=value)
-
-
 class AddCategory(CreateView):
     model = Category
-    form_class = CategoryForm
+    fields = '__all__'
     template_name = 'adminlte/categories/category_form.html'
 
 
 class EditCategory(UpdateView):
     model = Category
-    form_class = CategoryForm
     template_name = 'adminlte/categories/category_form.html'
 
 
@@ -60,15 +37,15 @@ class DeleteCategory(DeleteView):
         return reverse('adminPanel:admin_categories')
 
 
+class ProductFamilies(ListView):
+    model = ProductFamily
+    template_name = 'adminlte/categories/productfamilies.html'
+
+
 class AddProductFamily(CreateView):
     model = ProductFamily
     fields = '__all__'
     template_name = 'adminlte/categories/productfamily_form.html'
-
-
-class ProductFamilies(ListView):
-    model = ProductFamily
-    template_name = 'adminlte/categories/productfamilies.html'
 
 
 class EditProductFamily(UpdateView):
